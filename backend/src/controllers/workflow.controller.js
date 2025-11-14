@@ -13,7 +13,7 @@ exports.getWorkflowDetails = async (req, res, next) => {
             return next({ status: 404, message: "Record not found" });
         }
 
-        res.json({ record });
+        res.json( record );
     } catch (err) {
         next(err);
     }
