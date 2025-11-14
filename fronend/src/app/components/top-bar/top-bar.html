@@ -1,0 +1,67 @@
+<header class="top-bar">
+  <!-- Left Section: Logo and Title -->
+  <div class="flex items-center gap-3">
+    <div class="logo-circle">
+      <svg
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <circle cx="12" cy="12" r="10" fill="currentColor" opacity="0.2" />
+        <circle cx="12" cy="12" r="4" fill="currentColor" />
+      </svg>
+    </div>
+    <h1 class="app-title">Record Lifecycle Visualization</h1>
+  </div>
+
+  <!-- Center Section: Record Info -->
+  <div class="record-info">
+    <div class="flex flex-col gap-1">
+      <span class="record-id">{{ recordId }}</span>
+      <h2 class="record-title">{{ recordTitle }}</h2>
+    </div>
+    <span
+      class="status-badge"
+      [style.background-color]="statusColor + '1A'"
+      [style.color]="statusColor"
+      [style.border-color]="statusColor + '40'"
+    >
+      {{ status }}
+    </span>
+  </div>
+
+  <!-- Right Section: Actions -->
+  <div class="actions">
+    <div class="search-container">
+      <lucide-icon
+        [img]="Search"
+        class="search-icon"
+        [size]="18"
+      ></lucide-icon>
+      <input
+        type="text"
+        placeholder="Search records..."
+        class="search-input"
+        (input)="onSearch($event)"
+      />
+    </div>
+
+    <button
+      class="action-btn"
+      (click)="onFilter()"
+      aria-label="Filter"
+    >
+      <lucide-icon [img]="Filter" [size]="20"></lucide-icon>
+    </button>
+
+    <button
+      class="action-btn"
+      (click)="onRefresh()"
+      aria-label="Refresh"
+    >
+      <lucide-icon [img]="RefreshCw" [size]="20"></lucide-icon>
+    </button>
+  </div>
+</header>

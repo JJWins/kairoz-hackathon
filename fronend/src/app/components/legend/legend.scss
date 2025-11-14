@@ -1,0 +1,103 @@
+@use "tailwindcss";
+
+:host {
+  display: block;
+  width: 100%;
+}
+
+.legend-container {
+  @apply flex items-center justify-center gap-6 px-6 bg-white border-t border-gray-200;
+  padding-top: 16px;
+  padding-bottom: 16px;
+  min-height: 64px;
+  box-shadow: 0 -1px 3px rgba(0, 0, 0, 0.04);
+}
+
+.legend-label {
+  @apply text-sm font-medium text-gray-700;
+  white-space: nowrap;
+}
+
+.legend-items {
+  @apply flex items-center flex-wrap gap-4;
+}
+
+.legend-item {
+  @apply flex items-center gap-2;
+  white-space: nowrap;
+}
+
+.color-swatch {
+  @apply inline-block rounded-sm;
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+}
+
+.status-label {
+  @apply text-sm text-gray-700;
+  font-weight: 400;
+}
+
+.status-code {
+  @apply text-xs text-gray-500;
+  font-weight: 400;
+}
+
+.legend-divider {
+  width: 1px;
+  height: 20px;
+  background-color: #E5E7EB;
+  margin: 0 8px;
+}
+
+.edge-indicator {
+  display: inline-block;
+  width: 24px;
+  height: 3px;
+  position: relative;
+  flex-shrink: 0;
+  
+  &::after {
+    content: '';
+    position: absolute;
+    right: -2px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 0;
+    height: 0;
+    border-left: 5px solid;
+    border-top: 3px solid transparent;
+    border-bottom: 3px solid transparent;
+  }
+}
+
+.edge-actual {
+  background-color: #42A5F5;
+  
+  &::after {
+    border-left-color: #42A5F5;
+  }
+}
+
+.edge-loopback {
+  background-color: #FF9800;
+  
+  &::after {
+    border-left-color: #FF9800;
+  }
+}
+
+.edge-possible {
+  background: repeating-linear-gradient(
+    to right,
+    #CBD5E1 0px,
+    #CBD5E1 4px,
+    transparent 4px,
+    transparent 8px
+  );
+  
+  &::after {
+    border-left-color: #CBD5E1;
+  }
+}

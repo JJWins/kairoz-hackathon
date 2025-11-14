@@ -1,0 +1,54 @@
+:host {
+  display: block;
+}
+
+.era-legend-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  padding: 16px 24px;
+  background: white;
+  border-top: 1px solid #e5e7eb;
+  min-height: 60px;
+}
+
+.era-legend-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: #374151;
+  margin-right: 8px;
+}
+
+.era-legend-items {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.era-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.era-legend-swatch {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  border-radius: 3px;
+  flex-shrink: 0;
+}
+
+.era-legend-label {
+  font-size: 14px;
+  color: #374151;
+  font-weight: 500;
+}
+
+.era-legend-code {
+  font-size: 12px;
+  color: #9ca3af;
+  font-family: 'Monaco', 'Courier New', monospace;
+}

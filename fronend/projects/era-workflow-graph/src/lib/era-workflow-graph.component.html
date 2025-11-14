@@ -1,0 +1,10 @@
+<div class="era-workflow-graph-container">
+  <era-workflow-canvas
+    [recordId]="recordId"
+    [lifecycleGraph]="lifecycleGraph"
+    [mock]="mock"
+    (nodeSelected)="onNodeSelected($event)"
+  ></era-workflow-canvas>
+  
+  <era-legend *ngIf="config?.showLegend !== false"></era-legend>
+</div>

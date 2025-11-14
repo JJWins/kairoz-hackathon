@@ -1,0 +1,71 @@
+@use "tailwindcss";
+
+:host {
+  display: block;
+  width: 100%;
+  padding-top: 32px; // Add spacing between header and canvas
+}
+
+.workflow-canvas-wrapper {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.canvas-container {
+  position: relative;
+  width: 100%;
+  height: 650px; // Increased height for better layout
+  overflow: hidden;
+}
+
+.graph-wrapper {
+  background: #F6F8FA; // Light gray dotted background
+  background-image: 
+    radial-gradient(circle, #cbd5e1 1px, transparent 1px);
+  background-size: 20px 20px;
+  border-radius: 20px;
+}
+
+.cytoscape-surface {
+  // Cytoscape container - no explicit background
+  position: relative;
+  
+  // Ensure Cytoscape canvas fills this container
+  & > div {
+    width: 100% !important;
+    height: 100% !important;
+  }
+}
+
+.controls-overlay {
+  pointer-events: auto;
+}
+
+// Ensure Cytoscape canvas fills the container
+::ng-deep {
+  #cy {
+    width: 100%;
+    height: 100%;
+  }
+  
+  // Style for node HTML labels
+  .cy-node-html-label {
+    pointer-events: all;
+    
+    .workflow-node-card {
+      pointer-events: all;
+      cursor: pointer;
+    }
+  }
+  
+  // Make sure the canvas has the right cursor
+  .cytoscape-container {
+    cursor: grab;
+    
+    &:active {
+      cursor: grabbing;
+    }
+  }
+}

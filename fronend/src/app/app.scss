@@ -1,0 +1,50 @@
+@use "tailwindcss";
+
+// App Container - Full viewport height
+.app-container {
+  @apply min-h-screen flex flex-col bg-gray-50;
+}
+
+// Top Bar - Fixed height, full width
+.top-bar {
+  @apply flex-shrink-0;
+}
+
+// Main Content - Flex grow to fill remaining space
+.main-content {
+  @apply flex-1 flex flex-col overflow-auto;
+  padding: 2.5rem 0;
+  background: #F6F8FA;
+}
+
+// Content Wrapper - Centered with max width
+.content-wrapper {
+  @apply w-full max-w-7xl mx-auto px-8 flex flex-col;
+  gap: 1.5rem;
+}
+
+// Canvas Wrapper - Contains workflow canvas
+.canvas-wrapper {
+  @apply relative;
+}
+
+// Workflow Canvas
+.workflow-canvas {
+  @apply block w-full;
+}
+
+// Legend
+.legend {
+  @apply block w-full;
+}
+
+// Responsive adjustments
+@media (max-width: 768px) {
+  .main-content {
+    padding: 1rem 0;
+  }
+  
+  .content-wrapper {
+    @apply px-4 gap-4;
+  }
+}

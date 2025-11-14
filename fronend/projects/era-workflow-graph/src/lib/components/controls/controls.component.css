@@ -1,0 +1,41 @@
+.era-controls-container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.era-control-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08), 0 1px 3px rgba(0, 0, 0, 0.06);
+  transition: all 0.15s ease;
+  color: #374151;
+}
+
+.era-control-btn:hover {
+  background: #f9fafb;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12), 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+.era-control-btn:active {
+  background: #f3f4f6;
+  transform: scale(0.95);
+}
+
+.era-control-btn:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px white, 0 0 0 4px #3b82f6;
+}
+
+.era-icon {
+  width: 20px;
+  height: 20px;
+}

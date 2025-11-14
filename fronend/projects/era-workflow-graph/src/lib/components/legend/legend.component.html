@@ -1,0 +1,11 @@
+<div class="era-legend-container">
+  <div class="era-legend-title">Status Legend</div>
+  
+  <div class="era-legend-items">
+    <div class="era-legend-item" *ngFor="let item of statusItems">
+      <div class="era-legend-swatch" [style.background-color]="item.color"></div>
+      <span class="era-legend-label">{{ item.label }}</span>
+      <span class="era-legend-code">{{ item.code }}</span>
+    </div>
+  </div>
+</div>

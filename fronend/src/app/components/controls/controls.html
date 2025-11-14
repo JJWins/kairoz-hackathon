@@ -1,0 +1,28 @@
+<div class="controls-container">
+  <button
+    class="control-btn"
+    (click)="onZoomIn()"
+    aria-label="Zoom In"
+    title="Zoom In"
+  >
+    <lucide-icon [img]="ZoomIn" [size]="20"></lucide-icon>
+  </button>
+
+  <button
+    class="control-btn"
+    (click)="onZoomOut()"
+    aria-label="Zoom Out"
+    title="Zoom Out"
+  >
+    <lucide-icon [img]="ZoomOut" [size]="20"></lucide-icon>
+  </button>
+
+  <button
+    class="control-btn"
+    (click)="onFit()"
+    aria-label="Fit to View"
+    title="Fit to View"
+  >
+    <lucide-icon [img]="Maximize2" [size]="20"></lucide-icon>
+  </button>
+</div>

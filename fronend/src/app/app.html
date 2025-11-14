@@ -1,0 +1,22 @@
+<!-- Record Lifecycle Visualization App Layout -->
+<div class="app-container">
+  <!-- Top Bar - Full Width -->
+  <app-top-bar class="top-bar"></app-top-bar>
+
+  <!-- Main Content Area -->
+  <main class="main-content">
+    <!-- Centered Container -->
+    <div class="content-wrapper">
+      <!-- Workflow Canvas with Controls -->
+      <div class="canvas-wrapper">
+        <app-workflow-canvas 
+          [recordId]="recordId"
+          class="workflow-canvas"
+        ></app-workflow-canvas>
+      </div>
+
+      <!-- Legend at Bottom -->
+      <app-legend class="legend"></app-legend>
+    </div>
+  </main>
+</div>
