@@ -38,6 +38,7 @@ exports.getWorkflowDetails = (recordId) => {
             WHERE h.SR_HEADER_ID = ?
             ORDER BY h.UPDATE_TIMESTAMP ASC
         `;
+        
 
         // Fetch header details
         db.query(headerSql, [recordId], (err, results) => {
