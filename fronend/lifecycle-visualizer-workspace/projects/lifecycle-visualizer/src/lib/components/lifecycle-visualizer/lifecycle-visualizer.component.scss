@@ -1,0 +1,8 @@
+@use '../../styles/lifecycle-visualizer.scss';
+
+.lv-root {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}

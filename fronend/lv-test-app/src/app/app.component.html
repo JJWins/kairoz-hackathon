@@ -1,0 +1,18 @@
+<div style="padding: 20px;">
+  <h1>Lifecycle Visualizer Test</h1>
+  
+  <!-- Test 1: Mock data -->
+  <h2>Mock Data Example</h2>
+  <lifecycle-visualizer 
+    [mock]="true"
+    (nodeSelected)="onNodeSelected($event)">
+  </lifecycle-visualizer>
+
+  <!-- Test 2: Real data -->
+  <h2 style="margin-top: 40px;">Custom Data Example</h2>
+  <lifecycle-visualizer 
+    [lifecycleGraph]="lifecycleData"
+    [recordId]="'record-123'"
+    (nodeSelected)="onNodeSelected($event)">
+  </lifecycle-visualizer>
+</div>

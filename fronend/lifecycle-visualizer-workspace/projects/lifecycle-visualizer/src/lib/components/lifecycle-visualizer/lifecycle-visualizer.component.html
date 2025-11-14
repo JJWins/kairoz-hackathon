@@ -1,0 +1,6 @@
+<div class="lv-root" *ngIf="graph">
+  <lv-workflow-canvas 
+    [model]="graph" 
+    (nodeSelected)="handleNodeSelected($event)">
+  </lv-workflow-canvas>
+</div>

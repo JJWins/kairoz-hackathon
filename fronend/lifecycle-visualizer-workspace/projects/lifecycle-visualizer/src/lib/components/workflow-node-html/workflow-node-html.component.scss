@@ -1,0 +1,28 @@
+@use '../../styles/lifecycle-visualizer.scss';
+
+// Node Title
+.lv-node-title {
+  font-weight: bold;
+  font-size: 14px;
+  margin-bottom: 4px;
+}
+
+// Node Meta
+.lv-node-meta {
+  color: #666;
+  font-size: 12px;
+  margin-bottom: 2px;
+}
+
+// Node Date
+.lv-node-date {
+  color: #999;
+  font-size: 11px;
+}
+
+// Expanded Section
+.lv-expanded-section {
+  margin-top: 10px;
+  font-size: 12px;
+  color: #444;
+}

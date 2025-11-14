@@ -1,0 +1,103 @@
+// =============================================================================
+// LIFECYCLE VISUALIZER SHARED STYLES
+// =============================================================================
+
+// Canvas Background
+.lv-canvas-bg {
+  background-color: #F6F8FA;
+  background-image: radial-gradient(#e5e7eb 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+// Node Card (Small)
+.lv-node-card {
+  width: 220px;
+  min-height: 100px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  border: 1px solid #e5e7eb;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+// Ribbon Strip
+.lv-ribbon {
+  height: 6px;
+  width: 100%;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+}
+
+// Node Content
+.lv-node-content {
+  padding: 12px;
+  font-size: 13px;
+  color: #333;
+}
+
+// Expanded Node Style
+.lv-expanded {
+  transform: scale(1.25);
+  z-index: 100;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.18);
+  transition: transform 200ms ease, box-shadow 200ms ease;
+}
+
+// Controls Container
+.lv-controls-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  position: absolute;
+  left: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 50;
+}
+
+// Control Button
+.lv-control-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: white;
+  border: 1px solid #e5e7eb;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: background 120ms ease, transform 120ms ease;
+
+  &:hover {
+    background: #f3f4f6;
+    transform: scale(1.05);
+  }
+}
+
+// Legend
+.lv-legend {
+  display: flex;
+  gap: 18px;
+  padding: 14px 18px;
+  border-top: 1px solid #e5e7eb;
+  background: white;
+  font-size: 13px;
+  color: #444;
+}
+
+// Legend Item
+.lv-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+// Legend Color
+.lv-legend-color {
+  width: 12px;
+  height: 12px;
+  border-radius: 3px;
+}

@@ -1,0 +1,5 @@
+@use '../../styles/lifecycle-visualizer.scss';
+
+.lv-controls {
+  @extend .lv-controls-container;
+}
