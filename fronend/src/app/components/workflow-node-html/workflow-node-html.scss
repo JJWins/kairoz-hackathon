@@ -57,6 +57,8 @@
   height: 110px;
   background: white;
   border-radius: 12px;
+  border: none;
+  outline: none;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08), 0 1px 3px rgba(0, 0, 0, 0.06);
   overflow: hidden;
   display: flex;
@@ -75,11 +77,15 @@
 ::ng-deep .workflow-node-card-expanded {
   width: 280px;
   height: 160px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15), 0 4px 12px rgba(0, 0, 0, 0.1);
+  border: none;
+  outline: none;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.18), 0 6px 16px rgba(0, 0, 0, 0.12);
   z-index: 1000;
+  transform: scale(1.05);
   
   &:hover {
-    transform: none;
+    transform: scale(1.05);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.18), 0 6px 16px rgba(0, 0, 0, 0.12);
   }
 }
 
@@ -168,4 +174,18 @@
   font-weight: 400;
   text-align: right;
   flex: 1;
+}
+
+// Description styles for expanded nodes
+::ng-deep .metadata-description {
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid #e5e7eb;
+}
+
+::ng-deep .description-text {
+  font-size: 12px;
+  color: #666;
+  font-style: italic;
+  line-height: 1.4;
 }

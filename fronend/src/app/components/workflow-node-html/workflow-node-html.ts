@@ -60,6 +60,9 @@ export class WorkflowNodeHtml {
    * @returns HTML string for the expanded node
    */
   private getExpandedNodeHtml(data: NodeData, color: string): string {
+    // Generate a contextual description based on the state
+    const description = this.getStateDescription(data.state);
+    
     return `
       <div class="workflow-node-card workflow-node-card-expanded" data-node-id="${data.id}">
         <div class="node-ribbon" style="background-color: ${color};"></div>
@@ -78,10 +81,32 @@ export class WorkflowNodeHtml {
               <span class="metadata-label">ID:</span>
               <span class="metadata-value">${data.id}</span>
             </div>
+            ${description ? `
+            <div class="metadata-description">
+              <span class="description-text">${description}</span>
+            </div>
+            ` : ''}
           </div>
         </div>
       </div>
     `;
+  }
+
+  /**
+   * Gets a contextual description for each state
+   */
+  private getStateDescription(state: string): string {
+    const descriptions: { [key: string]: string } = {
+      'Draft': 'Initial preparation phase',
+      'Submitted': 'Under initial review',
+      'Review': 'In committee assessment',
+      'In Progress': 'Active evaluation',
+      'Approved': 'Successfully approved',
+      'Rejected': 'Requires modifications',
+      'Closed': 'Process completed',
+      'Revisions Required': 'Awaiting updates'
+    };
+    return descriptions[state] || '';
   }
 
   /**

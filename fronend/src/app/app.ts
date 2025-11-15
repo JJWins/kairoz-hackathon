@@ -15,7 +15,7 @@ export class App {
   @ViewChild(WorkflowCanvas) workflowCanvas?: WorkflowCanvas;
 
   // Record ID for the current workflow
-  recordId = 'REC-2025-001847';
+  recordId = '26';
 
   /**
    * Zoom in on the canvas
