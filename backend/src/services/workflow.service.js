@@ -30,7 +30,7 @@ exports.getWorkflowDetails = (recordId) => {
                     // Build nodes
                     response.nodes = historyRows.map((h) => ({
                         id: String(h.SR_STATUS_HISTORY_ID),
-                        state: h.STATUS_CODE,
+                        statusCode: h.STATUS_CODE,
                         label: h.DESCRIPTION,
                         status: h.DESCRIPTION,
                         owner: null,
