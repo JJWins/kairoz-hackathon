@@ -38,7 +38,31 @@ exports.getWorkflowDetails = (recordId) => {
             WHERE h.SR_HEADER_ID = ?
             ORDER BY h.UPDATE_TIMESTAMP ASC
         `;
-        
+
+        const availableActionSql = `
+            SELECT
+                aa.STATUS_CODE AS currentStatusCode,
+                curr.DESCRIPTION AS currentStatus,
+
+                aa.ACTION_TYPE_CODE AS actionCode,
+                at.DESCRIPTION AS actionName,
+
+                at.STATUS_CODE AS nextStatusCode,
+                ns.DESCRIPTION AS nextStatus
+            FROM sr_available_action aa
+            LEFT JOIN sr_status curr 
+                ON curr.STATUS_CODE = aa.STATUS_CODE
+            LEFT JOIN sr_action_type at 
+                ON at.ACTION_TYPE_CODE = aa.ACTION_TYPE_CODE
+            LEFT JOIN sr_status ns 
+                ON ns.STATUS_CODE = at.STATUS_CODE
+            WHERE aa.STATUS_CODE IN (
+                SELECT STATUS_CODE 
+                FROM sr_status_history 
+                WHERE SR_HEADER_ID = ?
+            );
+
+        `;
 
         // Fetch header details
         db.query(headerSql, [recordId], (err, results) => {
@@ -94,13 +118,35 @@ exports.getWorkflowDetails = (recordId) => {
 
                         response.edges.push({
                             id: String(curr.SR_STATUS_HISTORY_ID),
-                            source: String(curr.SR_STATUS_HISTORY_ID),
-                            target: String(next.SR_STATUS_HISTORY_ID),
+                            source: curr.DESCRIPTION,
+                            target: next.DESCRIPTION,
                         });
                     }
-                }
+                    db.query(availableActionSql, [recordId], (err3, rows) => {
+                        if (err3) return reject(err3);
 
-                resolve(response);
+                        const statusMap = {};
+
+                        rows.forEach(r => {
+                            if (!statusMap[r.currentStatusCode]) {
+                                statusMap[r.currentStatusCode] = {
+                                    status: r.currentStatus,
+                                    actions: []
+                                };
+                            }
+
+                            statusMap[r.currentStatusCode].actions.push({
+                                actionId: r.actionCode,
+                                actionName: r.actionName,
+                                nextStatus: r.nextStatus
+                            });
+                        });
+
+                        response.possiblePaths = Object.values(statusMap);
+
+                        resolve(response);
+                    });
+                }
             });
         });
     });
