@@ -80,6 +80,45 @@ export interface ApiPossiblePathsResponse {
 }
 
 /**
+ * Route Log API Response
+ */
+export interface ApiRouteLogApprover {
+  approverPersonId: string;
+  approverName: string;
+  approvalStatusCode: string;
+  approvalStatus: string;
+}
+
+export interface ApiRouteLogStop {
+  mapNumber: number;
+  mapName: string;
+  approvers: ApiRouteLogApprover[];
+}
+
+export interface ApiRouteLogResponse {
+  workflowId: number;
+  workflowStartDate: string;
+  workflowEndDate: string;
+  stops: ApiRouteLogStop[];
+}
+
+/**
+ * Status Code Details API Response
+ */
+export interface ApiStatusCodeDetail {
+  actionStartTime: string;
+  actionEndTime: string | null;
+  updatedByName: string;
+}
+
+export interface ApiStatusCodeDetailsResponse {
+  headerId: string;
+  statusCode: number;
+  statusDescription: string;
+  details: ApiStatusCodeDetail[];
+}
+
+/**
  * Internal interfaces for the component
  */
 export interface NodeData {
@@ -90,6 +129,9 @@ export interface NodeData {
   ribbonColor: string;
   state: string; // Display name (e.g., "Draft", "Submitted")
   stateId: number; // Numeric state ID from API (e.g., 1, 4, 5)
+  statusCode?: number;
+  timestamp?: string;
+  owner?: string | null;
 }
 
 export interface EdgeData { 
@@ -205,6 +247,37 @@ export class Lifecycle {
   }
 
   /**
+   * Get route log data for a record
+   * @param recordId The record ID
+   * @returns Observable of route log data
+   */
+  getRouteLog(recordId: string): Observable<ApiRouteLogResponse> {
+    const url = `${this.API_BASE_URL}/route-log/${recordId}`;
+    return this.http.get<ApiRouteLogResponse>(url).pipe(
+      catchError((error: HttpErrorResponse) => {
+        console.error('Route log API failed:', error.message);
+        throw error;
+      })
+    );
+  }
+
+  /**
+   * Get status code details for a specific workflow state
+   * @param moduleItemKey The module item key (record ID)
+   * @param statusCode The status code
+   * @returns Observable of status code details
+   */
+  getStatusCodeDetails(moduleItemKey: string, statusCode: number): Observable<ApiStatusCodeDetailsResponse> {
+    const url = `${this.API_BASE_URL}/get-status-code-details/${moduleItemKey}/${statusCode}`;
+    return this.http.get<ApiStatusCodeDetailsResponse>(url).pipe(
+      catchError((error: HttpErrorResponse) => {
+        console.error('Status code details API failed:', error.message);
+        throw error;
+      })
+    );
+  }
+
+  /**
    * Get numeric state ID from status string
    * @param status The status string
    * @returns Numeric state ID, or 0 if not found
@@ -271,9 +344,12 @@ export class Lifecycle {
           label: apiNode.label,
           state: apiNode.status,
           stateId: apiNode.statusCode,
+          statusCode: apiNode.statusCode, // Add statusCode for API calls
           actor: apiNode.owner || apiResponse.updateUser || 'System',
           date: this.formatDate(apiNode.timestamp),
-          ribbonColor: this.getColorForStatus(apiNode.status)
+          ribbonColor: this.getColorForStatus(apiNode.status),
+          timestamp: apiNode.timestamp,
+          owner: apiNode.owner
         });
       }
     });
