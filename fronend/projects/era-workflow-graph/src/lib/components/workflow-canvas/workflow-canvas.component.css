@@ -1,0 +1,77 @@
+:host {
+  display: block;
+  width: 100%;
+  padding-top: 32px;
+}
+
+.era-workflow-canvas-wrapper {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.era-canvas-container {
+  position: relative;
+  width: 100%;
+  height: 650px;
+  overflow: hidden;
+  border-radius: 24px;
+  background: white;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04);
+  border: 1px solid #e5e7eb;
+}
+
+.era-graph-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  padding: 48px;
+  background: #F6F8FA;
+  background-image: radial-gradient(circle, #cbd5e1 1px, transparent 1px);
+  background-size: 20px 20px;
+  border-radius: 20px;
+}
+
+.era-cytoscape-surface {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.era-cytoscape-surface > div {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.era-controls-overlay {
+  position: absolute;
+  left: 24px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 50;
+  pointer-events: auto;
+}
+
+/* Global Cytoscape canvas styles */
+:host ::ng-deep #cy {
+  width: 100%;
+  height: 100%;
+}
+
+:host ::ng-deep .cy-node-html-label {
+  pointer-events: all;
+}
+
+:host ::ng-deep .cy-node-html-label .era-workflow-node-card {
+  pointer-events: all;
+  cursor: pointer;
+}
+
+:host ::ng-deep .cytoscape-container {
+  cursor: grab;
+}
+
+:host ::ng-deep .cytoscape-container:active {
+  cursor: grabbing;
+}

@@ -1,0 +1,34 @@
+<div class="legend-container">
+  <div class="legend-label">Status Legend:</div>
+  
+  <div class="legend-items">
+    @for (item of statusItems; track item.label) {
+      <div class="legend-item">
+        <span 
+          class="color-swatch" 
+          [style.background-color]="item.color"
+        ></span>
+        <span class="status-label">{{ item.label }}</span>
+        <span class="status-code">({{ item.code }})</span>
+      </div>
+    }
+    
+    <!-- Edge type indicators -->
+    <div class="legend-divider"></div>
+    
+    <div class="legend-item">
+      <span class="edge-indicator edge-actual"></span>
+      <span class="status-label">Actual Transition</span>
+    </div>
+    
+    <div class="legend-item">
+      <span class="edge-indicator edge-loopback"></span>
+      <span class="status-label">Loopback/Revision</span>
+    </div>
+    
+    <div class="legend-item">
+      <span class="edge-indicator edge-possible"></span>
+      <span class="status-label">Possible Transition</span>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,71 @@
+@use "tailwindcss";
+
+.top-bar {
+  @apply flex items-center justify-between px-6 bg-white border-b border-gray-200;
+  height: 64px;
+  min-height: 64px;
+  gap: 2rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+// Left Section
+.logo-circle {
+  @apply flex items-center justify-center w-8 h-8 rounded-full bg-blue-500 text-white flex-shrink-0;
+}
+
+.app-title {
+  @apply text-lg font-semibold text-gray-900 whitespace-nowrap;
+}
+
+// Center Section
+.record-info {
+  @apply flex items-center gap-4 flex-1 justify-center max-w-2xl;
+}
+
+.record-id {
+  @apply text-xs font-medium text-gray-500 uppercase tracking-wide;
+  letter-spacing: 0.05em;
+}
+
+.record-title {
+  @apply text-sm font-medium text-gray-900;
+  max-width: 400px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.status-badge {
+  @apply px-3 py-1 rounded-full text-xs font-medium border whitespace-nowrap flex-shrink-0;
+}
+
+// Right Section
+.actions {
+  @apply flex items-center gap-3;
+}
+
+.search-container {
+  @apply relative flex items-center;
+}
+
+.search-icon {
+  @apply absolute left-3 text-gray-400 pointer-events-none;
+}
+
+.search-input {
+  @apply pl-10 pr-4 py-2 border border-gray-300 rounded-lg text-sm;
+  @apply focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent;
+  @apply placeholder-gray-400;
+  min-width: 220px;
+}
+
+.action-btn {
+  @apply p-2 rounded-lg border border-gray-300 bg-white;
+  @apply hover:bg-gray-50 active:bg-gray-100;
+  @apply transition-colors duration-150;
+  @apply flex items-center justify-center text-gray-600;
+
+  &:hover {
+    @apply text-gray-900;
+  }
+}

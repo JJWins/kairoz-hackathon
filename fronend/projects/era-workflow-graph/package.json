@@ -1,0 +1,30 @@
+{
+  "name": "@era/workflow-graph",
+  "version": "1.0.0",
+  "description": "Angular workflow visualization library with interactive node expansion, cycle detection, and customizable styling",
+  "keywords": [
+    "angular",
+    "workflow",
+    "graph",
+    "visualization",
+    "cytoscape",
+    "lifecycle"
+  ],
+  "author": "ERA Team",
+  "license": "MIT",
+  "peerDependencies": {
+    "@angular/common": ">=14.0.0",
+    "@angular/core": ">=14.0.0",
+    "cytoscape": "^3.0.0",
+    "cytoscape-dagre": "^2.0.0",
+    "cytoscape-node-html-label": "^1.0.0",
+    "lucide-angular": ">=0.0.1",
+    "tippy.js": "*",
+    "@popperjs/core": "*",
+    "rxjs": "^6.0.0 || ^7.0.0"
+  },
+  "dependencies": {
+    "tslib": "^2.3.0"
+  },
+  "sideEffects": false
+}

@@ -1,0 +1,19 @@
+<div class="era-workflow-canvas-wrapper">
+  <!-- Canvas Container with rounded edges, white background, shadow -->
+  <div class="era-canvas-container">
+    <!-- Inner wrapper with padding to inset the graph -->
+    <div class="era-graph-wrapper">
+      <!-- Cytoscape Container -->
+      <div class="era-cytoscape-surface" #cyContainer></div>
+      
+      <!-- Controls positioned on left side, vertically centered, floating above -->
+      <div class="era-controls-overlay">
+        <era-controls
+          (zoomIn)="onZoomIn()"
+          (zoomOut)="onZoomOut()"
+          (fit)="onResetZoom()"
+        ></era-controls>
+      </div>
+    </div>
+  </div>
+</div>
