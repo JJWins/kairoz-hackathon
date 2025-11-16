@@ -57,9 +57,9 @@
   height: 110px;
   background: white;
   border-radius: 12px;
-  border: none;
+  border: 1px solid rgba(0, 0, 0, 0.08);
   outline: none;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08), 0 1px 3px rgba(0, 0, 0, 0.06);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02);
   overflow: hidden;
   display: flex;
   flex-direction: column;
@@ -69,23 +69,24 @@
   
   &:hover {
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12), 0 2px 6px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+    border-color: rgba(0, 0, 0, 0.1);
   }
 }
 
 // Expanded node card styles
 ::ng-deep .workflow-node-card-expanded {
-  width: 280px;
-  height: 160px;
-  border: none;
+  width: 300px !important;
+  height: 180px !important;
+  border: 1px solid rgba(0, 0, 0, 0.1);
   outline: none;
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.18), 0 6px 16px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
   z-index: 1000;
-  transform: scale(1.05);
   
   &:hover {
-    transform: scale(1.05);
-    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.18), 0 6px 16px rgba(0, 0, 0, 0.12);
+    transform: translateY(-2px);
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.06);
+    border-color: rgba(0, 0, 0, 0.12);
   }
 }
 

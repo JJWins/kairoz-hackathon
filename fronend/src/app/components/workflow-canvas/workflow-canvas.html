@@ -1,6 +1,7 @@
 <div class="workflow-canvas-wrapper">
   <!-- Canvas Container with rounded edges, white background, shadow -->
-  <div class="canvas-container rounded-3xl bg-white shadow-sm border border-gray-200">
+  <div class="canvas-container rounded-3xl bg-white shadow-sm border border-gray-200" 
+       [style.height.px]="canvasHeight">
     <!-- Inner wrapper with padding to inset the graph -->
     <div class="graph-wrapper relative w-full h-full p-12">
       <!-- Cytoscape Container -->

@@ -42,6 +42,7 @@ if (elk) {
 })
 export class WorkflowCanvas implements AfterViewInit, OnDestroy {
   @Input() recordId: string = 'REC-2025-001847';
+  @Input() canvasHeight: number = 500; // Adjustable canvas height in pixels
   @ViewChild('cyContainer', { static: false }) cyContainer!: ElementRef<HTMLDivElement>;
 
   private cy?: Core;
@@ -213,13 +214,12 @@ export class WorkflowCanvas implements AfterViewInit, OnDestroy {
             'arrow-scale': 1.3
           }
         },
-        // Dynamic edges - dashed gray with 90° angled segments
+        // Dynamic edges - dashed gray with smooth curves
         {
           selector: 'edge[type = "dynamic"]',
           style: {
-            'curve-style': 'segments',
-            'segment-weights': '0.25 0.75',
-            'segment-distances': '50 -50',
+            'curve-style': 'bezier',
+            'control-point-step-size': 60,
             'line-style': 'dashed',
             'line-dash-pattern': [6, 4],
             'line-color': '#9CA3AF',
@@ -369,25 +369,28 @@ export class WorkflowCanvas implements AfterViewInit, OnDestroy {
       }
     });
 
-    // Focus on the last 4 state nodes initially
+    // Focus on the last 3 state nodes and their actions initially
     setTimeout(() => {
       if (this.cy) {
         const stateNodes = this.cy.nodes('[type = "state"]');
         const nodeCount = stateNodes.length;
         
         if (nodeCount > 0) {
-          // Get the last 4 nodes (or fewer if there are less than 4)
-          const startIndex = Math.max(0, nodeCount - 4);
-          const lastFourNodes = stateNodes.slice(startIndex);
+          // Get the last 3 state nodes
+          const startIndex = Math.max(0, nodeCount - 3);
+          const lastThreeNodes = stateNodes.slice(startIndex);
           
-          if (lastFourNodes.length > 0) {
-            // Fit to show the last 4 nodes with some padding
-            this.cy.fit(lastFourNodes, 100);
-            
-            // Adjust zoom to be a bit more zoomed out for better context
-            const currentZoom = this.cy.zoom();
-            this.cy.zoom(currentZoom * 0.9);
-          }
+          // Get all connected nodes (actions, future states) for these 3 nodes
+          const lastThreeWithActions = lastThreeNodes.reduce((collection: any, node: any) => {
+            return collection.union(node.closedNeighborhood());
+          }, this.cy.collection());
+          
+          // Fit to show these nodes and their actions with padding
+          this.cy.fit(lastThreeWithActions, 120);
+          
+          // Zoom out slightly for better overview
+          const currentZoom = this.cy.zoom();
+          this.cy.zoom(currentZoom * 0.9);
         } else {
           // Fallback: fit all content if no state nodes
           this.cy.fit(undefined, 80);
