@@ -6,6 +6,9 @@ export interface NodeData {
   actor: string;
   date: string;
   color?: string;
+  statusCode?: number;
+  timestamp?: string;
+  owner?: string | null;
 }
 
 @Component({
@@ -42,7 +45,7 @@ export class WorkflowNodeHtml {
     }
     
     return `
-      <div class="workflow-node-card" data-node-id="${data.id}">
+      <div class="workflow-node-card" data-node-id="${data.id}" style="width: 220px; height: 110px;">
         <div class="node-ribbon" style="background-color: ${color};"></div>
         <div class="node-content">
           <div class="node-state">${data.state}</div>
@@ -63,19 +66,36 @@ export class WorkflowNodeHtml {
     // Generate a contextual description based on the state
     const description = this.getStateDescription(data.state);
     
+    // Format timestamp if available
+    const formattedTimestamp = data.timestamp 
+      ? new Date(data.timestamp).toLocaleString('en-US', {
+          year: 'numeric',
+          month: 'short',
+          day: 'numeric',
+          hour: '2-digit',
+          minute: '2-digit'
+        })
+      : data.date;
+    
     return `
-      <div class="workflow-node-card workflow-node-card-expanded" data-node-id="${data.id}">
+      <div class="workflow-node-card workflow-node-card-expanded" data-node-id="${data.id}" style="width: 300px; height: 180px;">
         <div class="node-ribbon" style="background-color: ${color};"></div>
         <div class="node-content node-content-expanded">
           <div class="node-state-expanded">${data.state}</div>
           <div class="node-metadata">
+            ${data.statusCode !== undefined ? `
+            <div class="metadata-row">
+              <span class="metadata-label">Status Code:</span>
+              <span class="metadata-value">${data.statusCode}</span>
+            </div>
+            ` : ''}
             <div class="metadata-row">
               <span class="metadata-label">Owner:</span>
-              <span class="metadata-value">${data.actor}</span>
+              <span class="metadata-value">${data.owner || data.actor || 'N/A'}</span>
             </div>
             <div class="metadata-row">
-              <span class="metadata-label">Date:</span>
-              <span class="metadata-value">${data.date}</span>
+              <span class="metadata-label">Timestamp:</span>
+              <span class="metadata-value">${formattedTimestamp}</span>
             </div>
             <div class="metadata-row">
               <span class="metadata-label">ID:</span>
