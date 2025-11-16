@@ -1,6 +1,6 @@
 const { WorkflowRecord } = require("../models/workflow.model");
 const db = require("../config/database");
-const { headerSql, historySql, availableWorkflowSql, getPossiblePathsSql } = require("../sql/workflow.queries");
+const { headerSql, historySql, availableWorkflowSql, getPossiblePathsSql, getWorkflowRouteLogSql, statusSql, taskSql, getStatusSQL } = require("../sql/workflow.queries");
 
 exports.getWorkflowDetails = (recordId) => {
     return new Promise((resolve, reject) => {
@@ -117,35 +117,7 @@ exports.getPossiblePaths = (actionCode) => {
 exports.getWorkflowRouteLog = (moduleItemId) => {
     return new Promise((resolve, reject) => {
 
-        const sql = `
-            SELECT
-                w.WORKFLOW_ID,
-                w.WORKFLOW_START_DATE,
-                w.WORKFLOW_END_DATE,
-
-                wd.MAP_NUMBER,
-                wm.MAP_NAME,
-
-                wd.APPROVER_PERSON_ID,
-                p.FULL_NAME AS approverName,
-                wd.APPROVAL_STATUS as approvalStatusCode,
-                ws.DESCRIPTION as approvalStatus
-
-            FROM workflow w
-            LEFT JOIN workflow_detail wd
-                ON wd.WORKFLOW_ID = w.WORKFLOW_ID
-            LEFT JOIN workflow_map wm
-                ON wm.MAP_ID = wd.MAP_ID
-            LEFT JOIN person p
-                ON p.PERSON_ID = wd.APPROVER_PERSON_ID
-            LEFT JOIN workflow_status ws
-                ON ws.APPROVAL_STATUS = wd.APPROVAL_STATUS    
-
-            WHERE w.MODULE_ITEM_ID = ?
-            ORDER BY wd.MAP_NUMBER
-        `;
-
-        db.query(sql, [moduleItemId], (err, rows) => {
+        db.query(getWorkflowRouteLogSql, [moduleItemId], (err, rows) => {
             if (err) return reject(err);
 
             if (!rows || rows.length === 0) {
@@ -171,7 +143,7 @@ exports.getWorkflowRouteLog = (moduleItemId) => {
                 if (!stopGroup[stopNumber]) {
                     stopGroup[stopNumber] = {
                         mapNumber: stopNumber,
-                        mapName: r.MAP_NAME,  // KEEP MAP_NAME HERE
+                        mapName: r.MAP_NAME, 
                         stopName: r.STOP_NAME,
                         approvers: []
                     };
@@ -192,3 +164,100 @@ exports.getWorkflowRouteLog = (moduleItemId) => {
         });
     });
 };
+
+exports.getStatusAndTasks = (moduleItemKey) => {
+    return new Promise((resolve, reject) => {
+
+
+        // Execute both queries
+        db.query(statusSql, [moduleItemKey], (err, statusRows) => {
+            if (err) return reject(err);
+
+            db.query(taskSql, [moduleItemKey], (err, taskRows) => {
+                if (err) return reject(err);
+
+                // GROUP STATUS
+                const statusGroup = {};
+                statusRows.forEach(r => {
+                    if (!statusGroup[r.STATUS_CODE]) {
+                        statusGroup[r.STATUS_CODE] = {
+                            statusCode: r.STATUS_CODE,
+                            statusDescription: r.statusDescription,
+                            history: []
+                        };
+                    }
+
+                    statusGroup[r.STATUS_CODE].history.push({
+                        actionStartTime: r.ACTION_START_TIME,
+                        actionEndTime: r.ACTION_END_TIME
+                    });
+                });
+
+                // GROUP TASKS
+                const taskGroup = {};
+                taskRows.forEach(t => {
+                    const key = `${t.task_type_code}-${t.task_status_code}`;
+
+                    if (!taskGroup[key]) {
+                        taskGroup[key] = {
+                            taskType: t.taskTypeDescription,
+                            taskStatus: t.taskStatusDescription,
+                            details: []
+                        };
+                    }
+
+                    taskGroup[key].details.push({
+                        taskTypeCode: t.task_type_code,
+                        taskStatusCode: t.task_status_code,
+                        assignedTo: t.assigneeName,
+                        createdBy: t.creatorName,
+                        description: t.description,
+                        createTimestamp: t.create_timestamp,
+                        dueDate: t.due_date,
+                        assignedOn: t.assigned_on
+                    });
+                });
+
+                // Final Response
+                resolve({
+                    moduleItemKey,
+                    statusHistory: Object.values(statusGroup),
+                    tasks: Object.values(taskGroup)
+                });
+            });
+        });
+    });
+};
+
+exports.getStatusDetails = (headerId, statusCode) => {
+    return new Promise((resolve, reject) => {
+
+        db.query(getStatusSQL, [headerId, statusCode], (err, rows) => {
+            if (err) return reject(err);
+
+            if (!rows || rows.length === 0) {
+                return resolve({
+                    headerId,
+                    statusCode,
+                    statusDescription: null,
+                    details: []
+                });
+            }
+
+            const response = {
+                moduleItemKey: headerId,
+                statusCode: rows[0].STATUS_CODE,
+                statusDescription: rows[0].statusDescription,
+                details: rows.map(r => ({
+                    actionStartTime: r.ACTION_START_TIME,
+                    actionEndTime: r.ACTION_END_TIME,
+                    updatedByName: r.updatedByName
+                }))
+            };
+
+            resolve(response);
+        });
+    });
+};
+
+

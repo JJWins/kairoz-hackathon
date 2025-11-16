@@ -72,3 +72,40 @@ exports.getRouteLog = async (req, res, next) => {
         next(err);
     }
 }
+
+exports.getStatusAndTasks = async (req, res, next) => {
+    try {
+        const moduleItemKey = req.params.moduleItemKey;
+        if (!moduleItemKey) {
+            return next({ status: 400, message: "Module Key is required" })
+        }
+
+        const record = await WorkflowService.getStatusAndTasks(moduleItemKey)
+        if (!record) {
+            return next({ status: 404, message: "Module Item Key not found" });
+        }
+
+        res.json(record);
+    } catch (err) {
+        next(err);
+    }
+}
+
+exports.getStatusHistoryByCode = async (req, res, next) => {
+    try {
+        const statusCode = req.params.statusCode;
+        const headerId = req.params.headerId;
+        if (!statusCode && !headerId) {
+            return next({ status: 400, message: "Status code and Module item key is required" })
+        }
+
+        const record = await WorkflowService.getStatusDetails(headerId, statusCode)
+        if (!record) {
+            return next({ status: 404, message: "Status code or mudule item key not found" });
+        }
+
+        res.json(record);
+    } catch (err) {
+        next(err);
+    }
+}
