@@ -54,3 +54,21 @@ exports.getPossiblePaths = async (req, res, next) => {
         next(err);
     }
 }
+
+exports.getRouteLog = async (req, res, next) => {
+    try {
+        const moduleItemKey = req.params.moduleItemKey;
+        if (!moduleItemKey) {
+            return next({ status: 400, message: "Module Key is required" })
+        }
+
+        const record = await WorkflowService.getWorkflowRouteLog(moduleItemKey)
+        if (!record) {
+            return next({ status: 404, message: "Module Item Key not found" });
+        }
+
+        res.json(record);
+    } catch (err) {
+        next(err);
+    }
+}
